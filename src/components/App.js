@@ -37,3 +37,25 @@ const Enhance = compose(
 )
 
 export default Enhance(Component)
+
+// const Cat = props => <div>{props.text}</div>
+
+// const Test = props => <div>{props.render(props)}</div>
+
+// const Component = props => (
+//   <div style={{ height: '100%' }}>
+//     <Test {...props} render={props.renderProp} />
+//   </div>
+// )
+
+// export default withStateHandlers(
+//   {
+//     text: 'hoge',
+//   },
+//   {
+//     renderProp: () =>
+//       function RenderProp(props) {
+//         return <Cat {...props} />
+//       },
+//   }
+// )(Component)
