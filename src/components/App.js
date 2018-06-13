@@ -1,61 +1,26 @@
 import React from 'react'
-import {
-  compose,
-  setDisplayName,
-  withStateHandlers,
-  lifecycle,
-  pure,
-} from 'recompose'
-import Contents from './Contents'
-import Button from './Button'
+import { withStateHandlers, withHandlers, compose } from 'recompose'
+import Layout from './Layout'
+
+const Title = props => <div>{props.renderProps(props)}</div>
 
 const Component = props => (
-  <React.Fragment>
-    <Contents {...props} />
-    <Button {...props} />
-  </React.Fragment>
+  <Layout>
+    <Title {...props} />
+  </Layout>
 )
 
-const Enhance = compose(
-  setDisplayName('App'),
+export default compose(
   withStateHandlers(
     {
-      text: '',
-      show: false,
+      text: 'Render Props',
     },
-    {
-      setText: () => t => ({ text: t }),
-      setShow: ({ show }) => () => ({ show: !show }),
-    }
+    {}
   ),
-  lifecycle({
-    componentDidMount() {
-      this.props.setText('Hello React')
-    },
-  }),
-  pure
-)
-
-export default Enhance(Component)
-
-// const Cat = props => <div>{props.text}</div>
-
-// const Test = props => <div>{props.render(props)}</div>
-
-// const Component = props => (
-//   <div style={{ height: '100%' }}>
-//     <Test {...props} render={props.renderProp} />
-//   </div>
-// )
-
-// export default withStateHandlers(
-//   {
-//     text: 'hoge',
-//   },
-//   {
-//     renderProp: () =>
-//       function RenderProp(props) {
-//         return <Cat {...props} />
-//       },
-//   }
-// )(Component)
+  withHandlers({
+    renderProps: ({ text }) =>
+      function f() {
+        return <h1>{text}</h1>
+      },
+  })
+)(Component)
